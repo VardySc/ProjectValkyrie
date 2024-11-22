@@ -10,7 +10,7 @@ local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local CamlockState = false
-local Prediction = 0.13182
+local Prediction = 0.121323492382
 local enemy = nil
 
 -- Create ScreenGui
