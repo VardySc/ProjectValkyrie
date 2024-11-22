@@ -63,7 +63,7 @@ UIGradient.Parent = ToggleButton
 -- Add UIStroke for border
 local UIStroke = Instance.new("UIStroke")
 UIStroke.Thickness = 2
-UIStroke.Color = Color3.fromRGB(0, 255, 0)
+UIStroke.Color = Color3.fromRGB(255, 0, 0)
 UIStroke.Parent = ToggleButton
 
 -- Function to find the nearest enemy
