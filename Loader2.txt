@@ -1,0 +1,67 @@
+local Players = game:GetService("Players")
+local Lighting = game:GetService("Lighting")
+
+local targetNames = {
+    ["ProximaXentauri"] = true,
+    ["XENO_IDN"] = true
+}
+
+local function createGui(displayName)
+    if game.CoreGui:FindFirstChild("TriggeredGui") then return end
+
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "TriggeredGui"
+    gui.ResetOnSpawn = false
+    gui.Parent = game.CoreGui
+
+    local blur = Instance.new("BlurEffect")
+    blur.Size = 10
+    blur.Name = "TriggerBlur"
+    blur.Parent = Lighting
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0.5, 0, 0.3, 0)
+    frame.Position = UDim2.new(0.25, 0, 0.35, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    frame.BackgroundTransparency = 0.2
+    frame.Parent = gui
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = frame
+
+    local label = Instance.new("TextLabel")
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.Text = 'Owner of the script joined the game "' .. displayName .. '"'
+    label.TextColor3 = Color3.fromRGB(4, 175, 236)
+    label.TextScaled = true
+    label.Font = Enum.Font.Arcade  -- Font changed here
+    label.BackgroundTransparency = 1
+    label.Parent = frame
+
+    task.delay(5, function()
+        for i = 0, 1, 0.05 do
+            frame.BackgroundTransparency = 0.2 + i * 0.8
+            label.TextTransparency = i
+            blur.Size = math.max(0, 10 - i * 10)
+            task.wait(0.05)
+        end
+
+        if gui then gui:Destroy() end
+        if blur then blur:Destroy() end
+    end)
+end
+
+local function checkPlayer(player)
+    if targetNames[player.Name] then
+        createGui(player.DisplayName)
+    end
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    checkPlayer(player)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    checkPlayer(player)
+end)
